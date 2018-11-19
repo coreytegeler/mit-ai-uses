@@ -1,0 +1,178 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0; }
+
+main#ai-main {
+  width: calc(100% - 6rem);
+  height: calc(100% - 6rem);
+  background: black;
+  color: #fff;
+  font-family: arial;
+  font-style: 19px;
+  line-height: 22px;
+  padding: 3rem;
+  display: table; }
+  main#ai-main h1 {
+    font-size: 3rem;
+    line-height: 3.3rem; }
+  main#ai-main h2 {
+    font-size: 1.3rem;
+    line-height: 1.8rem; }
+
+header#ai-header {
+  padding: 0 0 3rem 0; }
+  header#ai-header h1.ai-header-title {
+    margin: 0; }
+  header#ai-header h2.ai-header-intro {
+    max-width: 30rem;
+    margin: 0;
+    font-weight: normal;
+    padding: 2rem 0 4rem 0; }
+  header#ai-header:hover {
+    cursor: pointer; }
+  header#ai-header#ai-types {
+    margin-bottom: 1vw; }
+  header#ai-header#ai-challenges {
+    margin-top: 1vw;
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  header#ai-header .ai-more-text {
+    display: table;
+    margin: auto;
+    padding: .5rem;
+    color: #00ffff;
+    border: 1px solid #00ffff; }
+  header#ai-header .ai-more-bracket {
+    width: 70%;
+    height: 1rem;
+    margin: -1px auto 0 auto;
+    position: relative;
+    border: solid #00ffff;
+    border-width: 1px 1px 0 1px; }
+    header#ai-header .ai-more-bracket::before, header#ai-header .ai-more-bracket::after {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: calc(100% - 12px);
+      border: solid #00ffff;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+      content: ''; }
+    header#ai-header .ai-more-bracket::before {
+      left: -6px; }
+    header#ai-header .ai-more-bracket::after {
+      right: -6px; }
+
+#ai-grid-wrap {
+  width: 100%;
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: nowrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row; }
+
+#ai-grid {
+  width: 50vw;
+  height: 50vw;
+  margin: 0 1rem;
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: rows; }
+
+.ai-cell {
+  width: calc(5vw - 6px);
+  height: calc(5vw - 6px);
+  background: #3e3e3e;
+  margin: 3px;
+  position: relative;
+  -webkit-transition: background 300ms ease-in-out;
+  transition: background 300ms ease-in-out; }
+
+.ai-eye:hover {
+  cursor: pointer; }
+
+.ai-pupil {
+  width: 1vw;
+  height: 1vw;
+  position: absolute;
+  left: calc(50% - 0.5vw);
+  top: calc(50% - 0.5vw);
+  border-radius: 50%;
+  background: #00ffff; }
+
+.ai-view-panel {
+  width: 20%; }
+
+.ai-view-inner {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out; }
+  .ai-active .ai-view-inner {
+    opacity: 1;
+    pointer-events: all; }
+
+h2.ai-view-title {
+  font-weight: bold;
+  margin: 0;
+  padding: 0 0 2rem 0;
+  opacity: .5;
+  -webkit-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out; }
+  h2.ai-view-title:hover {
+    cursor: pointer; }
+  .ai-active h2.ai-view-title, h2.ai-view-title:hover {
+    opacity: 1; }
+
+.ai-view-instruct {
+  color: #00ffff;
+  position: relative;
+  padding: 1rem 0;
+  border-top: 1px solid #00ffff; }
+  .ai-view-instruct::before {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -6px;
+    border: solid #00ffff;
+    content: ''; }
+    .ai-left .ai-view-instruct::before {
+      right: 0;
+      border-width: 1px 1px 0 0;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+    .ai-right .ai-view-instruct::before {
+      left: 0;
+      border-width: 0 0 1px 1px;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+
+.ai-view-key {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: nowrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: rows;
+  -webkit-box-align: center;
+          align-items: center; }
+
+.ai-view-key-square {
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  background-color: #3e3e3e; }
+
+.ai-view-key-label {
+  display: inline;
+  color: #fff;
+  margin-left: 1em; }
+
+footer#ai-footer {
+  padding: 3rem 0 0 0; }

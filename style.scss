@@ -1,0 +1,219 @@
+$grey: #3e3e3e;
+$turquoise: #00ffff;
+
+$white: #fff;
+$azure: #009bff;
+$green: #009e20;
+$pink: #ff00c6;
+$orange: #ff6c00;
+$purple: #3e35f9;
+$gold: #b9b900;
+$violet: #9400ff;
+
+$ease: ease-in-out;
+$easeExpo: cubic-bezier(1, 0, 0, 1);
+$easeBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+$gridSize: 50vw;
+$panelWidth: 20%;
+$pupilSize: 1vw;
+
+@mixin lg {
+	font-size: 3rem;
+	line-height: 3.3rem;
+}
+
+@mixin md {
+	font-size: 1.3rem;
+	line-height: 1.8rem;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+main#ai-main {
+	width: calc(100% - 6rem);
+	height: calc(100% - 6rem);
+	background: black;
+	color: $white;
+	font-family: arial;
+	font-style: 19px;
+	line-height: 22px;
+	padding: 3rem;
+	display: table;
+	h1 {
+		@include lg;
+	}
+	h2 {
+		@include md;
+	}
+}
+
+// The header
+header#ai-header {
+	padding: 0 0 3rem 0;
+	h1.ai-header-title {
+		margin: 0;
+	}
+	h2.ai-header-intro {
+		max-width: 30rem;
+		margin: 0;
+		font-weight: normal;
+		padding: 2rem 0 4rem 0;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+	&#ai-types {
+		margin-bottom: 1vw;
+	}
+	&#ai-challenges {
+		margin-top: 1vw;
+		transform: rotate(180deg);
+	}
+	.ai-more {
+			
+	}
+	.ai-more-text {
+		display: table;
+		margin: auto;
+		padding: .5rem;
+		color: $turquoise;
+		border: 1px solid $turquoise;
+	}
+	.ai-more-bracket {
+		width: 70%;
+		height: 1rem;
+		margin: -1px auto 0 auto;
+		position: relative;
+		border: solid $turquoise;
+		border-width: 1px 1px 0 1px;
+		&::before, &::after {
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			top: calc(100% - 12px);
+			border: solid $turquoise;
+			border-width: 0 1px 1px 0;
+			transform: rotate(45deg);
+			content: '';
+		}
+		&::before {
+			left: -6px;
+		}
+		&::after {
+			right: -6px;
+		}
+	}
+}
+
+// The grid
+#ai-grid-wrap {
+	width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+}
+#ai-grid {
+	width: $gridSize;
+	height: $gridSize;
+	margin: 0 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: rows;
+}
+.ai-cell {
+	width: calc(#{$gridSize/10} - 6px);
+	height: calc(#{$gridSize/10} - 6px);
+	background: $grey;
+	margin: 3px;
+	position: relative;
+	transition: background 300ms $ease;
+}
+.ai-eye {
+	&:hover {
+		cursor: pointer;
+	}
+}
+.ai-pupil {
+	width: $pupilSize;
+	height: $pupilSize;
+	position: absolute;
+	left: calc(50% - #{$pupilSize/2});
+	top: calc(50% - #{$pupilSize/2});
+	border-radius: 50%;
+	background: $turquoise;
+}
+
+// Left and right panels
+.ai-view-panel {
+	width: $panelWidth;
+}
+.ai-view-inner {
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 300ms $ease;
+	.ai-active & {
+		opacity: 1;
+		pointer-events: all;
+	}
+}
+h2.ai-view-title{
+	font-weight: bold;
+	margin: 0;
+	padding: 0 0 2rem 0;
+	opacity: .5;
+	transition: opacity 300ms $ease;
+	&:hover {
+		cursor: pointer;
+	}
+	.ai-active &, &:hover {
+		opacity: 1;
+	}
+}
+.ai-view-instruct{
+	color: $turquoise;
+	position: relative;
+	padding: 1rem 0;
+	border-top: 1px solid $turquoise;
+	&::before {
+		width: 10px;
+		height: 10px;
+		position: absolute;
+		top: -6px;
+		border: solid $turquoise;
+		content: '';
+		.ai-left & {
+			right: 0;
+			border-width: 1px 1px 0 0;
+			transform: rotate(45deg);
+		}
+		.ai-right & {
+			left: 0;
+			border-width: 0 0 1px 1px;
+			transform: rotate(45deg);
+		}
+	}
+}
+.ai-view-key {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: rows;
+	align-items: center;
+}
+.ai-view-key-square {
+	width: 2rem;
+	height: 2rem;
+	display: inline-block;
+	background-color: $grey;
+}
+.ai-view-key-label {
+	display: inline;
+	color: $white;
+	margin-left: 1em;
+}
+footer#ai-footer {
+	padding: 3rem 0 0 0;
+}
