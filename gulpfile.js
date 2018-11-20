@@ -8,9 +8,9 @@ var sass = require('gulp-sass');
 var coffee = require('gulp-coffee');
 var autoprefixer = require('gulp-autoprefixer');
 var gutil = require('gulp-util');
-var browserSync = require('browser-sync').create();
+var browsersync = require('browser-sync').create();
 
-gulp.task('compile-pug', function() {
+function compilePug()  {
 	return gulp.src('index.pug')
 		.pipe(plumber())
 		.pipe(pug())
@@ -19,16 +19,16 @@ gulp.task('compile-pug', function() {
 		log('HTML done');
 		if (argv.prod) log('HTML minified');
 	});
-});
+}
 
-gulp.task('compile-sass', function() {
+function compileSass()  {
 	var sassOptions = {
 		compress: argv.prod ? true : false
 	};
 	var apOptions = {
 		browsers: ['> 0.5%', 'last 5 versions', 'Firefox ESR', 'not dead']
 	};
-	gulp.src('style.scss')
+	return gulp.src('style.scss')
 		.pipe(plumber())
 		.pipe(sass(sassOptions))
 		.pipe(autoprefixer(apOptions))
@@ -37,48 +37,39 @@ gulp.task('compile-sass', function() {
 		log('Sass done');
 		if (argv.prod) log('CSS minified');
 	});
-});
+}
 
-gulp.task('compile-coffee', function() {
-	gulp.src('script.coffee')
+function compileCoffee()  {
+	return gulp.src('script.coffee')
 		.pipe(coffee({bare: true}))
 		.pipe(gulp.dest('./'))
 	.on('end', function() {
 		log('Coffee done');
 		if (argv.prod) log('JS minified');
 	});
-});
+}
 
-gulp.task('browser-sync', function() {
-	browserSync.init({
+function browserSync(done) {
+	browsersync.init({
 		notify: false,
 		server: {
 			baseDir: './'
 		}
 	});
-});
+}
 
-gulp.task('watch', function() {
-	gulp.watch('./*.pug', ['compile-pug']);
-	gulp.watch('./*.scss', ['compile-sass']);
-	gulp.watch('./*.coffee', ['compile-coffee']);
-	gulp.watch('*').on('change', browserSync.reload);
-});
+function browserSyncReload(done) {
+	browsersync.reload();
+}
 
-gulp.task('default', [
-	'compile-sass',
-	'compile-coffee',
-	'compile-pug',
-	'browser-sync',
-	'watch'
-]);
+function watchFiles() {
+	gulp.watch('./*.pug', compilePug);
+	gulp.watch('./*.scss', compileSass);
+	gulp.watch('./*.coffee', compileCoffee);
+	gulp.watch('*').on('change', browserSyncReload);
+}
 
-gulp.task('prod', [
-	'compile-sass',
-	'compile-coffee',
-	'compile-pug',
-]);
-
+gulp.task('default', gulp.parallel(compilePug, compileSass, compileCoffee, watchFiles, browserSync));
 
 function log(message) {
 	gutil.log(gutil.colors.bold.green(message));

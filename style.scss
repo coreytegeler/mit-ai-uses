@@ -28,43 +28,57 @@ $pupilSize: 1vw;
 	line-height: 1.8rem;
 }
 
+@mixin rg {
+	font-size: 19px;
+	line-height: 1.8rem;
+}
+
+@mixin sm {
+	font-size: .8rem;
+	line-height: .9rem;
+}
+
+@mixin trans {
+	transition: opacity 300ms $ease;
+}
+
 html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 }
-main#ai-main {
+
+#state-of-ai {
 	width: calc(100% - 6rem);
 	height: calc(100% - 6rem);
 	background: black;
 	color: $white;
 	font-family: arial;
-	font-style: 19px;
-	line-height: 22px;
+	@include rg;
 	padding: 3rem;
 	display: table;
-	h1 {
-		@include lg;
+	h2, h3, h4, h5 {
+		margin: 0;
 	}
 	h2 {
+		@include lg;
+	}
+	h3 {
 		@include md;
 	}
 }
 
 // The header
 header#ai-header {
-	padding: 0 0 3rem 0;
-	h1.ai-header-title {
-		margin: 0;
+	padding: 0 0 1rem 0;
+	h2.ai-header-title {
+		
 	}
-	h2.ai-header-intro {
+	h3.ai-header-intro {
 		max-width: 30rem;
 		margin: 0;
 		font-weight: normal;
 		padding: 2rem 0 4rem 0;
-	}
-	&:hover {
-		cursor: pointer;
 	}
 	&#ai-types {
 		margin-bottom: 1vw;
@@ -119,7 +133,7 @@ header#ai-header {
 #ai-grid {
 	width: $gridSize;
 	height: $gridSize;
-	margin: 0 1rem;
+	margin: 2.2rem 1rem 3rem 1rem;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: rows;
@@ -146,7 +160,28 @@ header#ai-header {
 	border-radius: 50%;
 	background: $turquoise;
 }
-
+.ai-tooltip {
+	width: 250%;
+	position: absolute;
+	top: calc(100% + .5rem);
+	left: .5rem;
+	z-index: 4;
+	opacity: 0;
+	pointer-events: none;
+	@include sm;
+	@include trans;
+	.ai-cell[data-index='10'] & {
+		left: unset;
+		right: .5rem;
+		text-align: right;
+	}
+	#ai-grid[data-view='left'] &.ai-left {
+		opacity: 1;
+	}
+	#ai-grid[data-view='right'] &.ai-right {
+		opacity: 1;
+	}
+}
 // Left and right panels
 .ai-view-panel {
 	width: $panelWidth;
@@ -154,16 +189,15 @@ header#ai-header {
 .ai-view-inner {
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity 300ms $ease;
+	@include trans;
 	.ai-active & {
 		opacity: 1;
 		pointer-events: all;
 	}
 }
-h2.ai-view-title{
+h3.ai-view-title{
 	font-weight: bold;
-	margin: 0;
-	padding: 0 0 2rem 0;
+	padding: 2rem 0;
 	opacity: .5;
 	transition: opacity 300ms $ease;
 	&:hover {
@@ -213,6 +247,31 @@ h2.ai-view-title{
 	display: inline;
 	color: $white;
 	margin-left: 1em;
+}
+.ai-stats {
+	margin: 3rem 0 0 0;
+	position: absolute;
+	left: -9999px;
+	opacity: 0;
+	pointer-events: none;
+	@include trans;
+	&.ai-active {
+		position: static;
+		left: unset;
+		opacity: 1;
+		pointer-events: all;
+	}
+}
+h2.ai-percent {
+
+}
+.ai-label {
+	
+}
+.ai-define {
+	@include sm;
+	color: $white;
+	margin: 1rem 0 0 0;
 }
 footer#ai-footer {
 	padding: 3rem 0 0 0;

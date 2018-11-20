@@ -1,24 +1,26 @@
 {
-  "name": "mit",
+  "name": "state-of-ai",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "browser-sync": "^2.24.6",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-coffee": "^2.3.4",
+    "gulp-cli": "^2.0.0",
     "gulp-if": "^2.0.2",
     "gulp-plumber": "^1.1.0",
     "gulp-pug": "^3.3.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^3.2.0",
-    "node-sass": "^4.9.3",
     "gulp-util": "^3.0.8",
-    "npm": "^5.10.0",
+    "merge": ">=1.2.1",
+    "node-sass": "^4.10.0",
+    "npm": "^6.4.1",
     "yargs": "^6.6.0"
   }
 }
