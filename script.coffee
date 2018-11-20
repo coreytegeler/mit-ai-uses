@@ -1,8 +1,11 @@
 document.addEventListener 'DOMContentLoaded', () ->
 
+	wrapper = document.getElementById('state-of-ai')
+	gridWrap = document.getElementById('ai-grid-wrap')
 	grid = document.getElementById('ai-grid')
 	panels = document.querySelectorAll('.ai-view-panel')
 	panelTitles = document.querySelectorAll('.ai-view-title')
+	field = grid
 
 	azure = '#009bff'
 	green = '#009e20'
@@ -11,6 +14,8 @@ document.addEventListener 'DOMContentLoaded', () ->
 	purple = '#3e35f9'
 	gold = '#b9b900'
 	violet = '#9400ff'
+
+	eyes = []
 
 	cellObjs =
 		91:
@@ -97,11 +102,16 @@ of the brain called artificial neural networks.'
 			cell = document.createElement('div')
 			cell.classList.add('ai-cell')
 			cell.dataset.index = i
-			if cellObjs.hasOwnProperty(i)
+			isEye = cellObjs.hasOwnProperty(i)
+			if isEye
 				cellObj = cellObjs[i]
+
 				cell.classList.add('ai-eye')
-				cell.style.background = cellObj.color
 				cell.addEventListener 'click', clickEyeCell
+
+				fill = document.createElement('div')
+				fill.classList.add('ai-fill')
+				fill.style.background = cellObj.color
 
 				pupil = document.createElement('div')
 				pupil.classList.add('ai-pupil')
@@ -114,15 +124,22 @@ of the brain called artificial neural networks.'
 				rightLabel.classList.add('ai-tooltip', 'ai-right')
 				rightLabel.innerHTML = cellObj.right.label
 
-				cell.innerHTML+=pupil.outerHTML+leftLabel.outerHTML+rightLabel.outerHTML
-				
+				cell.innerHTML+=fill.outerHTML+pupil.outerHTML+leftLabel.outerHTML+rightLabel.outerHTML
+
 			cell = grid.appendChild(cell)
+
+			if isEye
+				eyes.push(cell)
+
+			window.addEventListener 'mousemove', trackEyes
 
 	clickEyeCell = (e) ->
 		index = this.dataset.index
 		view = grid.dataset.view
 		if index == grid.dataset.index
 			grid.dataset.index = ''
+			grid.classList.remove('ai-cell-active')
+			this.classList.remove('ai-active')
 			theseStats = document.querySelectorAll('.ai-stats[data-index="'+index+'"]')
 			[].forEach.call theseStats, (thisStats, i) ->
 				thisStats.classList.remove('ai-active')
@@ -138,10 +155,15 @@ of the brain called artificial neural networks.'
 			[].forEach.call otherStats, (thisStats, i) ->
 				thisStats.classList.remove('ai-active')
 
+		if otherCell = document.querySelector('.ai-cell.ai-active')
+			otherCell.classList.remove('ai-active')
+
 		stats = document.querySelectorAll('.ai-stats[data-index="'+index+'"]')
 		[].forEach.call stats, (stat, i) ->
 			stat.classList.add('ai-active')
 		grid.dataset.index = index
+		grid.classList.add('ai-cell-active')
+		this.classList.add('ai-active')
 		clearCells()
 		fillCells()
 
@@ -208,16 +230,64 @@ of the brain called artificial neural networks.'
 		fillCells()
 
 	closePanel = (panel) ->
-		panel.classList.remove('ai-active')
 		grid.dataset.view = ''
 		grid.dataset.index = ''
+		grid.classList.remove('ai-cell-active')
+		panel.classList.remove('ai-active')
 		clearCells()
-	
-	# clickedCells = []
-	# clickCell = (e) ->
-	# 	this.style.background = 'black'
-	# 	clickedCells.push(this.dataset.index)
-	# 	console.log clickedCells.join(',')
 
+	# Eye movement adapted from https://codepen.io/ygricks/pen/WpQqNK
+	Point = (x, y) ->
+		@x = x
+		@y = y
+		@add = (w) ->
+			@x += w.x
+			@y += w.y
+			this
+		@min = (w) ->
+			@x -= w.x
+			@y -= w.y
+			this
+		return
+
+	getRelativePoint = (m, deg, dist) ->
+		new Point(m.x + Math.cos(Math.radians(deg)) * dist, m.y + Math.sin(Math.radians(deg)) * dist)
+
+	trackEyes = (e) ->
+		scrollY = window.scrollY || window.scrollTop || document.getElementsByTagName('html')[0].scrollTop
+		clientX = e.clientX
+		clientY = e.clientY + scrollY
+		cursor = new Point(clientX, clientY)
+		eyes.forEach (eye, i) ->
+			eyePosition = getPosition(eye)
+			eyeMid = new Point(eye.offsetWidth/2, eye.offsetWidth/2)
+			pupil = eye.querySelector('.ai-pupil')
+			degrees = Math.getDegBetween(eyePosition, cursor)
+			distance = eye.offsetWidth/2 - (pupil.offsetWidth/2)
+			newPupil = getRelativePoint(eyeMid, degrees, distance)
+			minus = new Point(pupil.offsetWidth/2, pupil.offsetWidth/2)
+			newPupil.min minus
+			pupil.style.top = newPupil.y + 'px'
+			pupil.style.left = newPupil.x + 'px'
+
+	getPosition = (el) ->
+		x = 0
+		y = 0
+		while el and !isNaN(el.offsetLeft) and !isNaN(el.offsetTop)
+			x += el.offsetLeft - (el.scrollLeft)
+			y += el.offsetTop - (el.scrollTop)
+			el = el.offsetParent
+		new Point(x, y)
+
+	Math.radians = (degrees) ->
+		degrees * Math.PI/180
+
+	Math.degrees = (radians) ->
+		radians * 180/Math.PI
+
+	Math.getDegBetween = (a, b) ->
+		deg = Math.degrees(Math.atan2(a.x - (b.x), a.y - (b.y))) * -1 - 90
+		if deg < 0 then 360 + deg else deg
+	
 	setupPanels()
 	setupGrid()

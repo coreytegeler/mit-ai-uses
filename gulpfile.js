@@ -40,7 +40,7 @@ function compileSass()  {
 }
 
 function compileCoffee()  {
-	return gulp.src('script.coffee')
+	return gulp.src('*.coffee')
 		.pipe(coffee({bare: true}))
 		.pipe(gulp.dest('./'))
 	.on('end', function() {
