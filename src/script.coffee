@@ -26,7 +26,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'extracts or generates meaning and intent from text in a readable, stylistically natural, and grammatically correct form.'
 			right:
 				coords: [15,21,24,25,31,33,34,35,42,43,44,45,46,52,53,54,61,62,63,64,65,66,71,72,74,75,81,82,83,92],
-				label: '"Technologies are immature."',
+				label: '&ldquo;Technologies are immature.&rdquo;',
 				define: 'of respondents say the technologies are immature.'
 		10:
 			color: green,
@@ -36,7 +36,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'is a subfield of machine learning concerned with algorithms inspired by the structure and function of the brain called artificial neural networks.'
 			right:
 				coords: [6,9,16,17,18,19,20,25,26,27,28,29,30,35,37,38,39,40,45,46,49,50,54,56,59,60,65,67,68,69,70,76,77,79,80,86,89,90,99],
-				label: '“...too expensive.”',
+				label: '&ldquo;...too expensive.&rdquo;',
 				define: 'of respondents say technologies and expertise are too expensive.'
 		13:
 			color: pink,
@@ -46,7 +46,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'automates repetitive processes performed by people – things like opening email attachments, completing e-forms, entering data.'
 			right:
 				coords: [4,5,7,12,14,15,17,19,21,22,23,24,25,26,27,28,32,33,34,35,37,42,44,45,46,54,64,65,66,73,75,76,84,85,86,95],
-				label: '“Managers don’t understand...”',
+				label: '&ldquo;Managers don’t understand...&rdquo;',
 				define: 'of respondents say managers don\'t understand cognitive technologies and how they work.'
 		48:
 			color: orange,
@@ -56,7 +56,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'can perform many different tasks in unpredictable environments, often working alongside human workers.'
 			right:
 				coords: [3,6,8,9,14,16,19,20,25,27,28,29,30,37,38,39,40,45,47,49,50,54,56,57,58,59,60,64,66,68,69,70,75,77,78,79,80,86,87,88,89,90,95,97,99,100],
-				label: '"Difficult to integrate..."',
+				label: '&ldquo;Difficult to integrate...&rdquo;',
 				define: 'of respondents say it’s difficult to integrate cognitive projects with existing processes and systems.'
 		55:
 			color: purple,
@@ -66,7 +66,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'use databases of knowledge and rules to automate the process of making inferences from information.'
 			right:
 				coords: [2,11,12,14,21,22,24,25,31,33,34,35,37,42,43,44,45,46,52,53,54,56,57,61,62,63,64,65,66,71,74,75,76,86],
-				label: '"Can\'t get enough people with expertise..."',
+				label: '&ldquo;Can\'t get enough people with expertise...&rdquo;',
 				define: 'of respondents can\'t get enough people with the technology expertise.'
 		51:
 			color: gold,
@@ -76,7 +76,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'is the ability of statistical models to improve their performance over time without the need for explicitly programmed instructions.'
 			right:
 				coords: [22,32,33,35,42,43,44,52,53,54,61,62,64,72,73,82,83],
-				label: '"Technologies have been oversold..."',
+				label: '&ldquo;Technologies have been oversold...&rdquo;',
 				define: 'of respondents say the technologies have been oversold in the marketplace.'
 		98:
 			color: violet,
@@ -86,7 +86,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'Of companies surveyed use no forms of artificial intelligence.'
 			right:
 				coords: [77,78,87,88,99],
-				label: '"None of these."',
+				label: '&ldquo;None of these.&rdquo;',
 				define: 'of respondents say none of these are challenges.'
 		
 	setupAnimation = () ->
@@ -134,33 +134,24 @@ document.addEventListener 'DOMContentLoaded', () ->
 
 	clickEyeCell = (e) ->
 		index = this.dataset.index
-		view = grid.dataset.view
+		view = grid.dataset.view || 'left'
+		panel = document.querySelector('.ai-view-panel.ai-'+view)
 		if index == grid.dataset.index
 			grid.dataset.index = ''
 			grid.classList.remove('ai-cell-active')
 			this.classList.remove('ai-active')
-			theseInfoBox = document.querySelectorAll('.ai-info-box[data-index="'+index+'"]')
-			[].forEach.call theseInfoBox, (thisInfoBox, i) ->
-				thisInfoBox.classList.remove('ai-active')
+			if infoBox = panel.querySelector('.ai-info-box.ai-active')
+				infoBox.classList.remove('ai-active')		
 			return clearCells()
-
-		if !view
-			panel = document.querySelector('.ai-view-panel.ai-left')
-			panel.classList.add('ai-flash')
+		if !panel.classList.contains('ai-active')
 			openPanel(panel)
-		else
-			panel = document.querySelector('.ai-view-panel.ai-'+view)
-
-		if otherInfoBox = document.querySelectorAll('.ai-info-box.ai-active')
-			[].forEach.call otherInfoBox, (thisInfoBox, i) ->
-				thisInfoBox.classList.remove('ai-active')
-
 		if otherCell = document.querySelector('.ai-cell.ai-active')
 			otherCell.classList.remove('ai-active')
 
-		infoBox = document.querySelectorAll('.ai-info-box[data-index="'+index+'"]')
-		[].forEach.call infoBox, (stat, i) ->
-			stat.classList.add('ai-active')
+		if otherInfoBox = panel.querySelector('.ai-info-box.ai-active')
+			otherInfoBox.classList.remove('ai-active')		
+		infoBox = panel.querySelector('.ai-info-box[data-index="'+index+'"]')
+		infoBox.classList.add('ai-active')
 		grid.dataset.index = index
 		grid.classList.add('ai-cell-active')
 		this.classList.add('ai-active')
@@ -237,14 +228,18 @@ document.addEventListener 'DOMContentLoaded', () ->
 
 	openPanel = (panel) ->
 		view = panel.dataset.view
+		grid.dataset.view = view
+		grid.dataset.index = ''
+		grid.classList.remove('ai-cell-active')
 		otherPanel = document.querySelector('.ai-view-panel:not(.ai-'+view+')')
 		if otherPanel
 			otherPanel.classList.remove('ai-active')
 			otherPanel.classList.remove('ai-flash')
+			if otherInfoBox = otherPanel.querySelector('.ai-info-box.ai-active')
+				otherInfoBox.classList.remove('ai-active')
 		panel.classList.add('ai-active')
-		grid.dataset.view = view
 		clearCells()
-		fillCells()
+		# fillCells()
 
 	closePanel = (panel) ->
 		view = panel.dataset.view
