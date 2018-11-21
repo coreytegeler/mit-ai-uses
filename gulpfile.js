@@ -75,10 +75,10 @@ function watchFiles() {
 	gulp.watch('./src/*.pug', compilePug);
 	gulp.watch('./src/*.scss', compileSass);
 	gulp.watch('./src/*.coffee', compileCoffee);
-	gulp.watch('*').on('change', browserSyncReload);
+	gulp.watch('**').on('change', browserSyncReload);
 }
 
-gulp.task('default', gulp.parallel(compilePug, compileSass, compileCoffee, watchFiles, browserSync));
+gulp.task('watch', gulp.parallel(compilePug, compileSass, compileCoffee, watchFiles, browserSync));
 gulp.task('build', gulp.parallel(compilePug, compileSass, compileCoffee));
 
 function log(message) {

@@ -127,7 +127,10 @@ header#ai-header {
 		transform: rotate(180deg);
 	}
 	.ai-more {
-			
+		width: 70%;
+		display: table;
+		margin: auto;
+		position: relative;
 	}
 	.ai-more-text {
 		display: table;
@@ -139,10 +142,12 @@ header#ai-header {
 		@include fs5;
 	}
 	.ai-more-bracket {
-		width: 70%;
-		height: 1em;
+		width: 0;
+		height: 0;
 		margin: -1px auto 0 auto;
-		position: relative;
+		position: absolute;
+    left: 50%;
+		top: 100%;
 		border: solid $turquoise;
 		border-width: 1px 1px 0 1px;
 		&::before, &::after {
@@ -153,7 +158,10 @@ header#ai-header {
 			border: solid $turquoise;
 			border-width: 0 1px 1px 0;
 			transform: rotate(45deg);
+			opacity: 0;
 			content: '';
+			transition: all 250ms $ease;
+			transition-delay: 1250ms;
 		}
 		&::before {
 			left: -6px;
@@ -161,6 +169,33 @@ header#ai-header {
 		&::after {
 			right: -6px;
 		}
+		&.ai-expand {
+			animation-name: expand-bracket;
+			animation-duration: 1500ms;
+			animation-fill-mode: forwards;
+			animation-timing-function: $easeExpo;
+	    &::before, &::after {
+	    	opacity: 1;
+	    }
+		}
+	}
+}
+
+@keyframes expand-bracket {
+	0% {
+		width: 0;
+		height: 0;
+		left: 50%;
+	}
+	70% {
+		width: 100%;
+		height: 0;
+		left: 0;
+	}
+	100% {
+		width: 100%;
+		height: 30px;
+		left: 0;
 	}
 }
 
@@ -368,6 +403,7 @@ header#ai-header {
 	}
 }
 .ai-percent {
+	margin: 0 0 5px 0;
 	@include palanquin;
 	@include fs2;
 }
@@ -376,7 +412,7 @@ header#ai-header {
 	@include fs3;
 }
 .ai-define {
-	margin: 1em 0 0 0;
+	margin: 15px 0 0 0;
 	color: $white;
 	@include roboto;
 	@include fs5;

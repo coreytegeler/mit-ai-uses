@@ -89,6 +89,12 @@ document.addEventListener 'DOMContentLoaded', () ->
 				label: '"None of these."',
 				define: 'of respondents say none of these are challenges.'
 		
+	setupAnimation = () ->
+		bracket = document.querySelector('.ai-more-bracket')
+		setTimeout () ->
+			bracket.classList.add('ai-expand')
+		, 1000
+
 	setupGrid = () ->
 		[1..100].forEach (i) ->
 			cell = document.createElement('div')
@@ -231,18 +237,17 @@ document.addEventListener 'DOMContentLoaded', () ->
 
 	openPanel = (panel) ->
 		view = panel.dataset.view
-		otherPanel = document.querySelectorAll('.ai-view-panel:not(.ai-'+view+')')
-		if otherPanel.length
-			otherPanel[0].classList.remove('ai-active')
-			otherPanel[0].classList.remove('ai-flash')
-			if otherInfoBox = otherPanel[0].querySelector('.ai-info-box.ai-active')
-				otherInfoBox.classList.remove('ai-active')
+		otherPanel = document.querySelector('.ai-view-panel:not(.ai-'+view+')')
+		if otherPanel
+			otherPanel.classList.remove('ai-active')
+			otherPanel.classList.remove('ai-flash')
 		panel.classList.add('ai-active')
 		grid.dataset.view = view
 		clearCells()
 		fillCells()
 
 	closePanel = (panel) ->
+		view = panel.dataset.view
 		grid.dataset.view = ''
 		grid.dataset.index = ''
 		grid.classList.remove('ai-cell-active')
@@ -250,6 +255,9 @@ document.addEventListener 'DOMContentLoaded', () ->
 		panel.classList.remove('ai-flash')
 		if infoBox = panel.querySelector('.ai-info-box.ai-active')
 			infoBox.classList.remove('ai-active')
+			otherPanel = document.querySelector('.ai-view-panel:not(.ai-'+view+')')
+			if otherInfoBox = otherPanel.querySelector('.ai-info-box.ai-active')
+				otherInfoBox.classList.remove('ai-active')
 		clearCells()
 
 	# Eye movement adapted from https://codepen.io/ygricks/pen/WpQqNK
@@ -320,3 +328,4 @@ document.addEventListener 'DOMContentLoaded', () ->
 	
 	setupPanels()
 	setupGrid()
+	setupAnimation()
