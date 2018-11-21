@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Palanquin+Dark|Roboto:300,500);
+
 $grey: #3e3e3e;
 $turquoise: #00ffff;
 
@@ -14,67 +16,108 @@ $ease: ease-in-out;
 $easeExpo: cubic-bezier(1, 0, 0, 1);
 $easeBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-$gridSize: 50vw;
-$panelWidth: 20%;
 $pupilSize: 1vw;
 
-@mixin lg {
-	font-size: 3rem;
-	line-height: 3.3rem;
-}
-
-@mixin md {
-	font-size: 1.3rem;
-	line-height: 1.8rem;
-}
-
-@mixin rg {
-	font-size: 19px;
-	line-height: 1.8rem;
-}
-
 @mixin sm {
-	font-size: .8rem;
-	line-height: .9rem;
+	@media(max-width: 992px) {
+		@content;
+	}
 }
 
-html, body {
-	width: 100%;
-	height: 100%;
-	margin: 0;
+@mixin fs1 {
+	font-size: 65px;
+	line-height: 70px;
+	@include sm {
+		font-size: 45px;
+		line-height: 47px;
+	}
+}
+
+@mixin fs2 {
+	font-size: 60px;
+	line-height: 68px;
+	@include sm {
+		font-size: 35px;
+		line-height: 38px;
+	}
+}
+
+@mixin fs3 {
+	font-size: 25px;
+	line-height: 30px;
+	@include sm {
+		font-size: 20px;
+		line-height: 23px;
+	}
+}
+
+@mixin fs4 {
+	font-size: 28px;
+	line-height: 30px;
+	@include sm {
+		font-size: 18px;
+		line-height: 21px;
+	}
+}
+
+@mixin fs5 {
+	font-size: 20px;
+	line-height: 24px;
+	@include sm {
+		font-size: 15px;
+		line-height: 18px;
+	}
+}
+
+@mixin fs6 {
+	font-size: 16px;
+	line-height: 20px;
+	@include sm {
+		font-size: 11px;
+		line-height: 13px;
+	}
+}
+
+@mixin roboto {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	@include sm {
+		font-weight: 500;
+	}
+}
+
+@mixin palanquin {
+	font-family: 'Palanquin Dark', sans-serif;
+	font-weight: normal;
 }
 
 #state-of-ai {
-	width: calc(100% - 6rem);
-	height: calc(100% - 6rem);
+	width: 100%;
+	max-width: 1180px;
 	background: black;
+	margin: auto;
+	padding: 30px;
 	color: $white;
-	font-family: arial;
-	@include rg;
-	padding: 3rem;
 	display: table;
-	h2, h3, h4, h5 {
-		margin: 0;
-	}
-	h2 {
-		@include lg;
-	}
-	h3 {
-		@include md;
-	}
+	@include fs4;
+	@include roboto;
+	text-rendering: optimizeLegibility;
+	box-sizing: border-box;
 }
 
 // The header
 header#ai-header {
-	padding: 0 0 1rem 0;
-	h2.ai-header-title {
-		
+	padding: 0 0 1em 0;
+	.ai-header-title {
+		@include palanquin;
+		@include fs1;
 	}
-	h3.ai-header-intro {
-		max-width: 30rem;
+	.ai-header-intro {
+		max-width: 30em;
 		margin: 0;
-		font-weight: normal;
-		padding: 2rem 0 4rem 0;
+		@include roboto;
+		@include fs3;
+		padding: 2em 0 4em 0;
 	}
 	&#ai-types {
 		margin-bottom: 1vw;
@@ -89,13 +132,15 @@ header#ai-header {
 	.ai-more-text {
 		display: table;
 		margin: auto;
-		padding: .5rem;
+		padding: .5em;
 		color: $turquoise;
 		border: 1px solid $turquoise;
+		@include roboto;
+		@include fs5;
 	}
 	.ai-more-bracket {
 		width: 70%;
-		height: 1rem;
+		height: 1em;
 		margin: -1px auto 0 auto;
 		position: relative;
 		border: solid $turquoise;
@@ -128,16 +173,23 @@ header#ai-header {
 	position: relative;
 }
 #ai-grid {
-	width: $gridSize;
-	height: $gridSize;
-	margin: 2.2rem 1rem 3rem 1rem;
+	width: 56%;
+	margin: 2.2em 2% 3em 2%;
+	display: -webkit-box;
 	display: flex;
 	flex-wrap: wrap;
-	flex-direction: rows;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	flex-direction: row;
+	align-content: start;
+	@include sm {
+		width: 46%;
+	}
 }
 .ai-cell {
-	width: calc(#{$gridSize/10} - 6px);
-	height: calc(#{$gridSize/10} - 6px);
+	width: calc(10% - 6px);
+	height: 0;
+	padding-bottom: calc(10% - 6px);
 	background: $grey;
 	margin: 3px;
 	position: relative;
@@ -159,6 +211,9 @@ header#ai-header {
 .ai-fill {
 	width: 100%;
 	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
 	transition: opacity 300ms $ease;
 	#ai-grid.ai-cell-active .ai-eye:not(.ai-active) & {
 		opacity: .5;
@@ -169,7 +224,7 @@ header#ai-header {
 	height: $pupilSize;
 	position: absolute;
 	transition: all 100ms linear;
-  left: calc(50% - #{$pupilSize/2});
+	left: calc(50% - #{$pupilSize/2});
 	top: calc(50% - #{$pupilSize/2});
 	border-radius: 50%;
 	background: $turquoise;
@@ -177,16 +232,19 @@ header#ai-header {
 .ai-tooltip {
 	width: 250%;
 	position: absolute;
-	top: calc(100% + .5rem);
-	left: .5rem;
+	top: calc(100% + .5em);
+	left: .5em;
 	z-index: 4;
 	opacity: 0;
 	pointer-events: none;
-	@include sm;
+	@include fs6;
+	@include roboto;
+	font-weight: 500;
+	text-shadow: 0 0 1px rgba(black,.8);
 	transition: opacity 300ms $ease;
 	.ai-cell[data-index='10'] & {
 		left: unset;
-		right: .5rem;
+		right: .5em;
 		text-align: right;
 	}
 	#ai-grid:not(.ai-cell-active)[data-view='left'] &.ai-left,
@@ -195,10 +253,16 @@ header#ai-header {
 	#ai-grid[data-view='right'] .ai-eye:hover &.ai-right {
 		opacity: 1;
 	}
+	@include sm {
+		width: 400%;
+	}
 }
 // Left and right panels
 .ai-view-panel {
-	width: $panelWidth;
+	width: 20%;
+	@include sm {
+		width: 25%;
+	}
 }
 .ai-view-inner {
 	opacity: 0;
@@ -209,18 +273,22 @@ header#ai-header {
 		pointer-events: all;
 	}
 }
-h3.ai-view-title {
-	font-weight: bold;
-	padding: 2rem 0;
+.ai-view-title {
+	padding: 2em 0;
 	opacity: .5;
 	user-select: none;
 	transition: opacity 300ms $ease;
+	@include palanquin;
+	@include fs4;
 	&:hover {
 		cursor: pointer;
 	}
 	.ai-active &, &:hover {
 		opacity: 1;
 	}
+	// .ai-flash & {
+	// 	animation: flash 500ms;
+	// }
 }
 .ai-instruct-arrow {
 	width: 10%;
@@ -259,50 +327,77 @@ h3.ai-view-title {
 .ai-view-instruct {
 	color: $turquoise;
 	position: relative;
-	padding: 1rem 0;
+	padding: 1em 0;
+	@include roboto;
+	@include fs6;
 }
 .ai-view-key {
 	display: flex;
 	flex-wrap: nowrap;
 	flex-direction: rows;
 	align-items: center;
+	@include fs5;
 }
 .ai-view-key-square {
-	width: 2rem;
-	height: 2rem;
+	width: 1em;
+	height: 1em;
 	display: inline-block;
 	background-color: $grey;
 }
 .ai-view-key-label {
 	display: inline;
-	color: $white;
 	margin-left: 1em;
+	@include palanquin;
+	@include fs6;
 }
-.ai-stats {
-	margin: 3rem 0 0 0;
+.ai-info {
+	position: relative;
+}
+.ai-info-box {
+	margin: 2em 0 0 0;
 	position: absolute;
-	left: -9999px;
+	top: 0;
+	left: 0;
+	// left: -9999px;
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity 300ms $ease;
 	&.ai-active {
-		position: static;
-		left: unset;
 		opacity: 1;
 		pointer-events: all;
 	}
 }
-h2.ai-percent {
-
+.ai-percent {
+	@include palanquin;
+	@include fs2;
 }
 .ai-label {
-	
+	@include palanquin;
+	@include fs3;
 }
 .ai-define {
-	@include sm;
+	margin: 1em 0 0 0;
 	color: $white;
-	margin: 1rem 0 0 0;
+	@include roboto;
+	@include fs5;
 }
 footer#ai-footer {
-	padding: 3rem 0 0 0;
+	padding: 3em 0 0 0;
+	@include roboto;
+	@include fs6;
+}
+
+@keyframes flash {
+	0% {
+		opacity: .5;
+	}
+	25% {
+		opacity: 1;
+	}
+	50% {
+		opacity: .5;	
+	}
+	100% {
+		opacity: 1;
+	}
 }
