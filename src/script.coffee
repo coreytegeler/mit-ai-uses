@@ -103,7 +103,6 @@ document.addEventListener 'DOMContentLoaded', () ->
 			isEye = cellObjs.hasOwnProperty(i)
 			if isEye
 				cellObj = cellObjs[i]
-
 				cell.classList.add('ai-eye')
 				cell.addEventListener 'click', clickEyeCell
 
@@ -135,6 +134,11 @@ document.addEventListener 'DOMContentLoaded', () ->
 	clickEyeCell = (e) ->
 		index = this.dataset.index
 		view = grid.dataset.view || 'left'
+		
+		titles = document.querySelectorAll('.ai-view-panel .ai-view-title')
+		[].forEach.call titles, (title, i) ->
+			title.classList.add('ai-flash')
+
 		panel = document.querySelector('.ai-view-panel.ai-'+view)
 		if index == grid.dataset.index
 			grid.dataset.index = ''
@@ -234,7 +238,6 @@ document.addEventListener 'DOMContentLoaded', () ->
 		otherPanel = document.querySelector('.ai-view-panel:not(.ai-'+view+')')
 		if otherPanel
 			otherPanel.classList.remove('ai-active')
-			otherPanel.classList.remove('ai-flash')
 			if otherInfoBox = otherPanel.querySelector('.ai-info-box.ai-active')
 				otherInfoBox.classList.remove('ai-active')
 		panel.classList.add('ai-active')
@@ -247,7 +250,6 @@ document.addEventListener 'DOMContentLoaded', () ->
 		grid.dataset.index = ''
 		grid.classList.remove('ai-cell-active')
 		panel.classList.remove('ai-active')
-		panel.classList.remove('ai-flash')
 		if infoBox = panel.querySelector('.ai-info-box.ai-active')
 			infoBox.classList.remove('ai-active')
 			otherPanel = document.querySelector('.ai-view-panel:not(.ai-'+view+')')

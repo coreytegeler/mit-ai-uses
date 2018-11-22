@@ -321,9 +321,13 @@ header#ai-header {
 	.ai-active &, &:hover {
 		opacity: 1;
 	}
-	// .ai-flash & {
-	// 	animation: flash 500ms;
-	// }
+	&.ai-flash {
+		animation: flashOut 1200ms;
+		.ai-active & {
+			opacity: 1;
+			animation: none;
+		}
+	}
 }
 .ai-instruct-arrow {
 	width: 10%;
@@ -423,17 +427,15 @@ footer#ai-footer {
 	@include fs6;
 }
 
-@keyframes flash {
+
+@keyframes flashOut {
 	0% {
 		opacity: .5;
 	}
 	25% {
 		opacity: 1;
 	}
-	50% {
-		opacity: .5;	
-	}
 	100% {
-		opacity: 1;
+		opacity: .5;
 	}
 }
