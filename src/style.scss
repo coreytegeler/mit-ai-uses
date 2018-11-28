@@ -322,11 +322,7 @@ header#ai-header {
 		opacity: 1;
 	}
 	&.ai-flash {
-		animation: flashOut 1200ms;
-		.ai-active & {
-			opacity: 1;
-			animation: none;
-		}
+		animation: flash 1200ms;
 	}
 }
 .ai-instruct-arrow {
@@ -428,7 +424,7 @@ footer#ai-footer {
 }
 
 
-@keyframes flashOut {
+@keyframes flash {
 	0% {
 		opacity: .5;
 	}

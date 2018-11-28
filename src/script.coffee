@@ -133,7 +133,10 @@ document.addEventListener 'DOMContentLoaded', () ->
 
 	clickEyeCell = (e) ->
 		index = this.dataset.index
-		view = grid.dataset.view || 'left'
+		view = grid.dataset.view
+
+		if !view
+			return flashPanels()
 		
 		titles = document.querySelectorAll('.ai-view-panel .ai-view-title')
 		[].forEach.call titles, (title, i) ->
@@ -256,6 +259,13 @@ document.addEventListener 'DOMContentLoaded', () ->
 			if otherInfoBox = otherPanel.querySelector('.ai-info-box.ai-active')
 				otherInfoBox.classList.remove('ai-active')
 		clearCells()
+
+	flashPanels = () ->
+		panelTitles.forEach (title, i) ->
+			title.style.opacity = 1;
+			setTimeout () ->
+				title.style.opacity = '';
+			, 300
 
 	# Eye movement adapted from https://codepen.io/ygricks/pen/WpQqNK
 	Point = (x, y) ->
