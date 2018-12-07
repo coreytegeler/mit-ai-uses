@@ -36,17 +36,17 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'is a subfield of machine learning concerned with algorithms inspired by the structure and function of the brain called artificial neural networks.'
 			right:
 				coords: [6,9,16,17,18,19,20,25,26,27,28,29,30,35,37,38,39,40,45,46,49,50,54,56,59,60,65,67,68,69,70,76,77,79,80,86,89,90,99],
-				label: '&ldquo;...too expensive.&rdquo;',
-				define: 'of respondents say technologies and expertise are too expensive.'
+				label: '&ldquo;Too expensive.&rdquo;',
+				define: 'of respondents say the technologies and expertise are too expensive.'
 		13:
 			color: pink,
 			left:
 				coords: [1,2,3,4,5,6,7,8,11,12,14,15,16,17,21,22,23,24,25,26,28,31,32,33,35,36,37,41,42,43,44,45,46,47,49,52,53,56,57,61,62,63,65,66,72,73,74,76,77,78,79,81,82,83,85,86,88,95],
 				label: 'Robotic process automation (RPA)',
-				define: 'automates repetitive processes performed by people – things like opening email attachments, completing e-forms, entering data.'
+				define: 'automates repetitive processes performed by people – things like opening email attachments, completing e-forms, and entering data.'
 			right:
 				coords: [4,5,7,12,14,15,17,19,21,22,23,24,25,26,27,28,32,33,34,35,37,42,44,45,46,54,64,65,66,73,75,76,84,85,86,95],
-				label: '&ldquo;Managers don’t understand...&rdquo;',
+				label: '&ldquo;Managers don’t understand the text&rdquo;',
 				define: 'of respondents say managers don\'t understand cognitive technologies and how they work.'
 		48:
 			color: orange,
@@ -56,7 +56,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'can perform many different tasks in unpredictable environments, often working alongside human workers.'
 			right:
 				coords: [3,6,8,9,14,16,19,20,25,27,28,29,30,37,38,39,40,45,47,49,50,54,56,57,58,59,60,64,66,68,69,70,75,77,78,79,80,86,87,88,89,90,95,97,99,100],
-				label: '&ldquo;Difficult to integrate...&rdquo;',
+				label: '&ldquo;Difficult to integrate.&rdquo;',
 				define: 'of respondents say it’s difficult to integrate cognitive projects with existing processes and systems.'
 		55:
 			color: purple,
@@ -66,7 +66,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'use databases of knowledge and rules to automate the process of making inferences from information.'
 			right:
 				coords: [2,11,12,14,21,22,24,25,31,33,34,35,37,42,43,44,45,46,52,53,54,56,57,61,62,63,64,65,66,71,74,75,76,86],
-				label: '&ldquo;Can\'t get enough people with expertise...&rdquo;',
+				label: '&ldquo;Can\'t get enough people with expertise.&rdquo;',
 				define: 'of respondents can\'t get enough people with the technology expertise.'
 		51:
 			color: gold,
@@ -76,18 +76,18 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'is the ability of statistical models to improve their performance over time without the need for explicitly programmed instructions.'
 			right:
 				coords: [22,32,33,35,42,43,44,52,53,54,61,62,64,72,73,82,83],
-				label: '&ldquo;Technologies have been oversold...&rdquo;',
+				label: '&ldquo;Technologies have been oversold.&rdquo;',
 				define: 'of respondents say the technologies have been oversold in the marketplace.'
 		98:
 			color: violet,
 			left:
 				coords: [99],
 				label: 'None',
-				define: 'Of companies surveyed use no forms of artificial intelligence.'
+				define: 'A small percentage of the companies surveyed don’t use any forms of artificial intelligence.'
 			right:
 				coords: [77,78,87,88,99],
 				label: '&ldquo;None of these.&rdquo;',
-				define: 'of respondents say none of these are challenges.'
+				define: 'of respondents say none of the cited issues is a challenge.'
 		
 	setupAnimation = () ->
 		bracket = document.querySelector('.ai-more-bracket')
@@ -212,15 +212,16 @@ document.addEventListener 'DOMContentLoaded', () ->
 				percent = document.createElement('div')
 				percent.classList.add('ai-percent')
 				percent.innerHTML = props.coords.length+1+'%'
-				label = document.createElement('div')
-				label.classList.add('ai-label')
-				label.innerHTML = props.label
-				infoBox.innerHTML += percent.outerHTML+label.outerHTML
-				if props.define
-					define = document.createElement('div')
-					define.classList.add('ai-define')
-					define.innerHTML = props.define
-					infoBox.appendChild(define)
+				infoBox.innerHTML += percent.outerHTML
+				if view == 'left'
+					label = document.createElement('div')
+					label.classList.add('ai-label')
+					label.innerHTML = props.label
+					infoBox.innerHTML += label.outerHTML
+				define = document.createElement('div')
+				define.classList.add('ai-define')
+				define.innerHTML = props.define
+				infoBox.appendChild(define)
 				info.appendChild(infoBox)
 
 		[].forEach.call panelTitles, (panelTitle, i) ->
@@ -298,7 +299,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 			eyeMid = new Point(eye.offsetWidth/2, eye.offsetWidth/2)
 			pupil = eye.querySelector('.ai-pupil')
 			degrees = Math.getDegBetween(eyePosition, cursor)
-			distance = eye.offsetWidth/2 - pupil.offsetWidth
+			distance = eye.offsetWidth/2 - pupil.offsetWidth*1.5
 			newPupil = getRelativePoint(eyeMid, degrees, distance)
 			minus = new Point(pupil.offsetWidth/2, pupil.offsetWidth/2)
 			newPupil.min minus
