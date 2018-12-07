@@ -234,10 +234,10 @@ header#ai-header {
 	&:hover {
 		cursor: pointer;
 		.ai-pupil {
-			opacity: 0;
+			// opacity: 0;
 			// transition: all 50ms linear;
-			// left: calc(50% - #{$pupilSize/2}) !important;
-			// top: calc(50% - #{$pupilSize/2}) !important;
+			left: calc(50% - #{$pupilSize/2}) !important;
+			top: calc(50% - #{$pupilSize/2}) !important;
 		}
 	}
 	#ai-grid.ai-cell-active &:not(.ai-active) {
