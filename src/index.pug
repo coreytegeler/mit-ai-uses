@@ -28,26 +28,34 @@ html(lang='en')
 					.ai-more-text Click on a category to ﬁnd out more
 					.ai-more-bracket
 
+			.ai-view-title.ai-mobile(data-view='left') Types of AI in use today
+			.ai-view-title.ai-mobile(data-view='right') Top challenges posed by AI
 			#ai-grid-wrap
 				.ai-view-panel.ai-left(data-view='left')
-					.ai-view-title Types of AI in use today
+					.ai-view-title.ai-desktop(data-view='left') Types of AI in use today
 					.ai-view-inner
-						.ai-instruct-arrow
-						.ai-view-instruct Click on a colored square to explore the chart
-						.ai-view-key
+						.ai-instruct-arrow.ai-desktop
+						.ai-view-instruct.ai-desktop Click on a colored square to explore the chart
+						.ai-view-key.ai-desktop
 							.ai-view-key-square
 							.ai-view-key-label 1 square = 1%
 						.ai-info
 				#ai-grid
 				.ai-view-panel.ai-right(data-view='right')
-					.ai-view-title Top challenges posed by AI
+					.ai-view-title.ai-desktop(data-view='right') Top challenges posed by AI
 					.ai-view-inner
-						.ai-instruct-arrow
-						.ai-view-instruct Click on a colored square to explore the chart
-						.ai-view-key
+						.ai-instruct-arrow.ai-desktop
+						.ai-view-instruct.ai-desktop Click on a colored square to explore the chart
+						.ai-view-key.ai-desktop
 							.ai-view-key-square
 							.ai-view-key-label 1 square = 1%
 						.ai-info
+
+			.ai-view-help.ai-mobile
+				.ai-view-instruct Click on a colored square to explore the chart
+				.ai-view-key
+					.ai-view-key-square
+					.ai-view-key-label 1 square = 1%
 
 			footer#ai-footer
 				.ai-credit Source: The 2017 Deloitte State of Cognitive Survey

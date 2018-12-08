@@ -225,10 +225,20 @@ document.addEventListener 'DOMContentLoaded', () ->
 				info.appendChild(infoBox)
 
 		[].forEach.call panelTitles, (panelTitle, i) ->
-			panelTitle.addEventListener 'click', clickPanel
+			panelTitle.addEventListener 'click', clickTitle
 
-	clickPanel = () ->
-		panel = this.parentElement
+	clickTitle = () ->
+		if this.dataset.view
+			view = this.dataset.view
+			panel = document.querySelector('.ai-view-panel[data-view="'+view+'"]')
+			otherTitle = document.querySelector('.ai-view-title.ai-mobile:not([data-view="'+view+'"])')
+			otherTitle.classList.remove('ai-active')
+			if this.classList.contains('ai-active')
+				this.classList.remove('ai-active')
+			else
+				this.classList.add('ai-active')
+		else
+			panel = this.parentElement
 		if panel.classList.contains('ai-active')
 			closePanel(panel)
 		else
@@ -324,15 +334,6 @@ document.addEventListener 'DOMContentLoaded', () ->
 	Math.getDegBetween = (a, b) ->
 		deg = Math.degrees(Math.atan2(a.x - (b.x), a.y - (b.y))) * -1 - 90
 		if deg < 0 then 360 + deg else deg
-
-	# resizeBaseTest = () ->
-	# 	fontSize = window.innerWidth/60
-	# 	console.log fontSize
-	# 	root.style.fontSize = fontSize+'px'
-	# 	if eyes.length
-	# 		trackEyes()
-
-	# resizeBaseTest()
 	
 	setupPanels()
 	setupGrid()
