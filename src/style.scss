@@ -142,7 +142,7 @@ header#ai-header {
 		transform: rotate(180deg);
 	}
 	.ai-more {
-		width: 70%;
+		width: 80%;
 		display: table;
 		margin: auto;
 		position: relative;
@@ -178,8 +178,11 @@ header#ai-header {
 			transform: rotate(45deg);
 			opacity: 0;
 			content: '';
-			transition: all 250ms $ease;
-			transition-delay: 1250ms;
+			// transition: all 250ms $ease;
+			// transition-delay: 1300ms;
+			// @include sm {
+			// 	transition-delay: 1500ms;
+			// }
 		}
 		&::before {
 			left: -6px;
@@ -192,14 +195,42 @@ header#ai-header {
 			animation-duration: 1500ms;
 			animation-fill-mode: forwards;
 			animation-timing-function: $easeExpo;
+			@include sm {
+				animation-name: mobile-expand-bracket;
+			}
 	    &::before, &::after {
-	    	opacity: 1;
+	    	animation-name: expand-bracket-arrows;
+				animation-duration: 1500ms;
+				animation-fill-mode: forwards;
+				animation-timing-function: $easeExpo;
+				@include sm {
+					animation-name: mobile-expand-bracket-arrows;
+				}
+	    	// opacity: 1;
 	    }
 		}
 	}
 }
 
 @keyframes expand-bracket {
+	0% {
+		width: 0;
+		height: 0;
+		left: 50%;
+	}
+	70% {
+		width: 100%;
+		height: 0;
+		left: 0%;
+	}
+	100% {
+		width: 100%;
+		height: 30px;
+		left: 0%;
+	}
+}
+
+@keyframes mobile-expand-bracket {
 	0% {
 		width: 0;
 		height: 0;
@@ -214,6 +245,30 @@ header#ai-header {
 		width: 60%;
 		height: 30px;
 		left: 20%;
+	}
+}
+
+@keyframes expand-bracket-arrows {
+	0% {
+		opacity: 0;
+	}
+	70% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes mobile-expand-bracket-arrows {
+	0% {
+		opacity: 0;
+	}
+	80% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }
 
@@ -258,8 +313,6 @@ header#ai-header {
 	&:hover {
 		cursor: pointer;
 		.ai-pupil {
-			// opacity: 0;
-			// transition: all 50ms linear;
 			left: calc(50% - #{$pupilSize/2}) !important;
 			top: calc(50% - #{$pupilSize/2}) !important;
 		}

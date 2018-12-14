@@ -21,7 +21,7 @@ document.addEventListener 'DOMContentLoaded', () ->
 		91:
 			color: azure,
 			left:
-				coords: [6,15,16,17,21,22,23,24,26,27,29,30,31,32,33,38,40,42,43,44,45,46,47,49,53,54,56,57,59,60,61,63,64,66,67,68,69,70,71,72,73,74,75,77,80,81,82,83,84,87,88,90,92,93,94,96,100],
+				coords: [6,15,16,17,21,22,23,24,26,27,29,30,31,32,33,38,40,42,43,44,45,46,47,49,53,54,56,57,59,61,63,64,66,67,68,69,71,72,73,74,75,77,81,82,83,84,87,88,92,93,94,96],
 				label: 'Natural language processing/</br>generation (NLP/G)',
 				define: 'extracts or generates meaning and intent from text in a readable, stylistically natural, and grammatically correct form.'
 			right:
@@ -46,8 +46,8 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'automates repetitive processes performed by people – things like opening email attachments, completing e-forms, and entering data.'
 			right:
 				coords: [4,5,7,12,14,15,17,19,21,22,23,24,25,26,27,28,32,33,34,35,37,42,44,45,46,54,64,65,66,73,75,76,84,85,86,95],
-				label: '&ldquo;Managers don’t understand the text&rdquo;',
-				define: 'of respondents say managers don\'t understand cognitive technologies and how they work.'
+				label: '&ldquo;Managers don’t understand the tech.&rdquo;',
+				define: 'of respondents say managers don’t understand cognitive technologies and how they work.'
 		48:
 			color: orange,
 			left:
@@ -66,8 +66,8 @@ document.addEventListener 'DOMContentLoaded', () ->
 				define: 'use databases of knowledge and rules to automate the process of making inferences from information.'
 			right:
 				coords: [2,11,12,14,21,22,24,25,31,33,34,35,37,42,43,44,45,46,52,53,54,56,57,61,62,63,64,65,66,71,74,75,76,86],
-				label: '&ldquo;Can\'t get enough people with expertise.&rdquo;',
-				define: 'of respondents can\'t get enough people with the technology expertise.'
+				label: '&ldquo;Can’t get enough people with expertise.&rdquo;',
+				define: 'of respondents can’t get enough people with the technology expertise.'
 		51:
 			color: gold,
 			left:
@@ -295,7 +295,18 @@ document.addEventListener 'DOMContentLoaded', () ->
 	getRelativePoint = (m, deg, dist) ->
 		new Point(m.x + Math.cos(Math.radians(deg)) * dist, m.y + Math.sin(Math.radians(deg)) * dist)
 
+	getBrowserId = ->
+		aKeys = ['MSIE','Firefox','Safari','Chrome','Opera']
+		sUsrAg = navigator.userAgent
+		nIdx = aKeys.length - 1
+		while nIdx > -1 and sUsrAg.indexOf(aKeys[nIdx]) == -1
+			nIdx--
+		return aKeys[nIdx]
+
 	trackEyes = (e) ->
+		e.stopPropagation()
+		if getBrowserId() == 'Safari'
+			return
 		scrollY = window.scrollY || window.scrollTop || document.getElementsByTagName('html')[0].scrollTop
 		if e.type == 'resize'
 			clientX = window.innerWidth/2
